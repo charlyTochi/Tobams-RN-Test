@@ -35,12 +35,13 @@ function Home() {
           name="Home"
           component={Menu}
           options={{
-            tabBarIcon: ({color, focused}) => (
+            // eslint-disable-next-line react/no-unstable-nested-components
+            tabBarIcon: ({focused}) => (
               <View>
                 <MaterialIcons
                   name="home"
                   color={focused ? colors.primary : colors.ash}
-                  size={25}
+                  size={20}
                 />
               </View>
             ),
@@ -50,11 +51,12 @@ function Home() {
           name="Menu"
           component={Menu}
           options={{
-            tabBarIcon: ({color, focused}) => (
+            // eslint-disable-next-line react/no-unstable-nested-components
+            tabBarIcon: ({focused}) => (
               <FontAwesome
                 name="th-large"
                 color={focused ? colors.primary : colors.ash}
-                size={25}
+                size={20}
               />
             ),
           }}
@@ -63,11 +65,12 @@ function Home() {
           name="Cart"
           component={Cart}
           options={{
-            tabBarIcon: ({color, focused}) => (
+            // eslint-disable-next-line react/no-unstable-nested-components
+            tabBarIcon: ({focused}) => (
               <FontAwesome
                 name="shopping-bag"
                 color={focused ? colors.primary : colors.ash}
-                size={25}
+                size={20}
               />
             ),
           }}
@@ -76,10 +79,11 @@ function Home() {
           name="Account"
           component={Menu}
           options={{
-            tabBarIcon: ({color, focused}) => (
+            // eslint-disable-next-line react/no-unstable-nested-components
+            tabBarIcon: ({}) => (
               <Image
                 source={require('../../assets/images/profile-image.png')}
-                style={{width: 30, height: 30}}
+                style={{width: 25, height: 25}}
               />
             ),
           }}

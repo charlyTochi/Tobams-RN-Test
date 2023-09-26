@@ -7,6 +7,7 @@ import {
   FlatList,
   TextInput,
   Pressable,
+  KeyboardAvoidingView,
 } from 'react-native';
 import colors from '../../core/config/colors';
 import {globalStyles} from '../../core/config/global-styles';
@@ -132,7 +133,8 @@ export const Menu = props => {
             onChangeText={value => setSearchValue(value)}
             value={searchValue}
             placeholder="Search"
-            style={{flex: 1, marginLeft: 10}}
+            placeholderTextColor={colors.black}
+            style={styles.textInputStyle}
           />
         </View>
 
@@ -219,6 +221,13 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 40,
     backgroundColor: colors.grey,
+  },
+  textInputStyle: {
+    flex: 1,
+    marginLeft: 10,
+    fontFamily: 'Poppins-Regular',
+    color: colors.black,
+    marginTop: 5,
   },
 
   searchMainView: {

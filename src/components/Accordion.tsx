@@ -61,7 +61,7 @@ const Accordion: React.FC<AccordionProps> = ({title, content}) => {
       </TouchableOpacity>
       {isExpanded && (
         <View style={styles.content}>
-          <Text>{content}</Text>
+          <Text style={styles.contentTxt}>{content}</Text>
         </View>
       )}
     </View>
@@ -87,6 +87,11 @@ const styles = StyleSheet.create({
   },
   content: {
     padding: 10,
+  },
+  contentTxt: {
+    ...globalStyles.small,
+    color: colors.black,
+    fontFamily: 'Poppins-Regular',
   },
 });
 

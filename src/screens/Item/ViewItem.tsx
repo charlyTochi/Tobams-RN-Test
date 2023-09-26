@@ -52,27 +52,27 @@ export const ViewItem: React.FC = props => {
   const accordionData = [
     {
       title: 'Ingredients',
-      content: 'Content for Section 1',
+      content: 'Content for Ingredients ',
     },
     {
       title: 'Nutritional Information',
-      content: 'Content for Section 2',
+      content: 'Content for Nutritional Information',
     },
     {
       title: 'How to prepare',
-      content: 'Content for Section 3',
+      content: 'Content for How to prepare',
     },
     {
       title: 'Dietary Information',
-      content: 'Content for Section 3',
+      content: 'Content for Dietary Information',
     },
     {
       title: 'Storage Information',
-      content: 'Content for Section 3',
+      content: 'Content for Storage Information',
     },
     {
       title: 'Extra',
-      content: 'Content for Section 3',
+      content: 'Content for Extra',
     },
   ];
 
