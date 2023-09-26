@@ -1,10 +1,12 @@
 import React from 'react';
-import {StyleSheet, Text, Pressable, Keyboard} from 'react-native';
+import {StyleSheet, Text, Pressable, Keyboard, View} from 'react-native';
 import colors from '../core/config/colors';
 import {globalStyles} from '../core/config/global-styles';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const AppBtn = (props: {
   onPress: any;
+  icon: any;
   title: any;
   type: any;
   color: any;
@@ -16,6 +18,7 @@ const AppBtn = (props: {
     title,
     moreButtonStyles,
     type,
+    icon,
     color,
     textColor = colors.white,
   } = props;
@@ -50,7 +53,18 @@ const AppBtn = (props: {
       accessible={true}
       accessibilityLabel="AppButton"
       style={containerStyle}>
-      <Text style={textStyle}>{title}</Text>
+      <View style={{flexDirection: 'row'}}>
+        {icon && (
+          <FontAwesome
+            name={icon}
+            size={20}
+            color={colors.white}
+            style={{marginRight: 10}}
+          />
+        )}
+
+        <Text style={textStyle}>{title}</Text>
+      </View>
     </Pressable>
   );
 };

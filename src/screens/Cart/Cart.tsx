@@ -1,8 +1,16 @@
 import React from 'react';
-import {View, Text, StyleSheet, ScrollView, Image} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Image,
+  Pressable,
+} from 'react-native';
 import {globalStyles} from '../../core/config/global-styles';
 import colors from '../../core/config/colors';
 import AppBtn from '../../components/AppBtn';
+import routes from '../../routes/routes';
 
 const dummyCartItems = [
   {
@@ -10,35 +18,23 @@ const dummyCartItems = [
     name: 'Asaro',
     optional: ' (Yam Porridge)',
     price: '£30',
-    image: require('./src/assets/images/porridge.png'),
+    image: require('../../assets/images/porridge.png'),
   },
   {
     id: 2,
     name: 'Moi Moi',
     optional: '(Bean Cake)',
     price: '£30',
-    image: require('./src/assets/images/bean-cake.png'),
+    image: require('../../assets/images/bean-cake.png'),
   },
   {
     id: 3,
     name: 'Efo Riro',
     optional: '',
     price: '£30',
-    image: require('./src/assets/images/riro.png'),
+    image: require('../../assets/images/riro.png'),
   },
 ];
-
-const Header: React.FC = () => (
-  <View style={styles.header}>
-    <View style={styles.arrowContainer}>
-      <Image
-        source={require('./src/assets/images/right-arrow.png')}
-        style={styles.arrowImage}
-      />
-    </View>
-    <Text style={styles.headerText}>Cart</Text>
-  </View>
-);
 
 const ProductItem: React.FC<{item: any}> = ({item}) => (
   <View style={styles.productItem}>
@@ -50,21 +46,21 @@ const ProductItem: React.FC<{item: any}> = ({item}) => (
       </View>
       <Text style={styles.productPrice}>{item.price}</Text>
       <Image
-        source={require('./src/assets/images/basket.png')}
+        source={require('../../assets/images/basket.png')}
         style={styles.basketIcon}
       />
     </View>
     <View style={styles.quantityContainer}>
       <View style={styles.quantityButton}>
         <Image
-          source={require('./src/assets/images/black-minus.png')}
+          source={require('../../assets/images/black-minus.png')}
           style={styles.quantityButtonImage}
         />
       </View>
       <Text style={styles.quantity}>1</Text>
       <View style={styles.quantityButton}>
         <Image
-          source={require('./src/assets/images/cart-black.png')}
+          source={require('../../assets/images/cart-black.png')}
           style={styles.plusButtonImage}
         />
       </View>
@@ -72,42 +68,70 @@ const ProductItem: React.FC<{item: any}> = ({item}) => (
   </View>
 );
 
-export const Cart: React.FC = () => (
-  <>
-    <Header />
+export const Cart: React.FC = props => {
+  const {navigation} = props;
 
-    <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.separator} />
-      {dummyCartItems.map(item => (
-        <ProductItem key={item.id} item={item} />
-      ))}
-    </ScrollView>
-    <View style={styles.totalContainer}>
-      <View style={styles.summaryContainer}>
-        <View style={styles.totalValueContainer}>
-          <Text style={styles.totalText}>Total</Text>
-          <Text style={styles.items}>(3 items)</Text>
+  // eslint-disable-next-line react/no-unstable-nested-components
+  const Header = () => {
+    return (
+      <>
+        <Pressable
+          onPress={() => navigation.navigate(routes.home)}
+          style={styles.header}>
+          <View style={styles.arrowContainer}>
+            <Image
+              source={require('../../assets/images/right-arrow.png')}
+              style={styles.arrowImage}
+            />
+          </View>
+          <Text style={styles.headerText}>Cart</Text>
+        </Pressable>
+      </>
+    );
+  };
+
+  return (
+    <>
+      <Header />
+
+      <ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.separator} />
+        {dummyCartItems.map(item => (
+          <ProductItem key={item.id} item={item} />
+        ))}
+      </ScrollView>
+      <View style={styles.totalContainer}>
+        <View style={styles.summaryContainer}>
+          <View style={styles.totalValueContainer}>
+            <Text style={styles.totalText}>Total</Text>
+            <Text style={styles.items}>(3 items)</Text>
+          </View>
+          <Text style={styles.amount}>£90</Text>
         </View>
-        <Text style={styles.amount}>£90</Text>
+        <AppBtn
+          title="Checkout - £90"
+          onPress={() => console.log('hello')}
+          moreButtonStyles={{width: 350}}
+        />
       </View>
-      <AppBtn
-        title="Checkout - £90"
-        onPress={() => console.log('Hello')}
-        moreButtonStyles={{width: 350}}
-      />
-    </View>
-  </>
-);
+    </>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 18,
-    paddingTop: 30,
+    paddingHorizontal: 15,
+    paddingTop: 20,
     paddingBottom: 20,
+    backgroundColor: colors.grey,
+    flex: 1,
   },
   header: {
     flexDirection: 'row',
-    paddingHorizontal: 30,
+    paddingHorizontal: 20,
+    paddingTop: 10,
+    backgroundColor: colors.grey,
+    height: 80,
   },
   arrowContainer: {
     width: 36,
@@ -117,7 +141,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderColor: colors.ash,
-    top: 20,
+    top: 30,
   },
   arrowImage: {
     width: 6.5,
@@ -129,7 +153,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Medium',
     color: colors.black,
     paddingHorizontal: 120,
-    top: 25,
+    top: 35,
   },
   separator: {
     borderWidth: 0.6,
@@ -137,11 +161,11 @@ const styles = StyleSheet.create({
   },
   productItem: {
     flexDirection: 'row',
-    marginTop: 20,
+    marginTop: 30,
     marginBottom: 10,
   },
   productInfo: {
-    flex: 0.9,
+    flex: 1,
   },
   productName: {
     ...globalStyles.paragraph,
@@ -160,7 +184,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   quantityContainer: {
-    flex: 0.4,
+    flex: 0.3,
   },
   quantityButton: {
     height: 32,

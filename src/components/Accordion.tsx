@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import colors from '../core/config/colors';
 import {globalStyles} from '../core/config/global-styles';
+import Icon from 'react-native-vector-icons/FontAwesome';
 interface AccordionProps {
   title: string;
   content: React.ReactNode;
@@ -40,7 +41,21 @@ const Accordion: React.FC<AccordionProps> = ({title, content}) => {
         <View style={styles.header}>
           <Text style={styles.title}>{title}</Text>
           <Animated.View style={{transform: [{rotate: rotateArrow}]}}>
-            {isExpanded ? <Text>▲</Text> : <Text>▼</Text>}
+            {isExpanded ? (
+              <Icon
+                name="angle-up"
+                size={20}
+                color={colors.black}
+                style={{marginLeft: 80}}
+              />
+            ) : (
+              <Icon
+                name="angle-down"
+                size={20}
+                color={colors.black}
+                style={{marginLeft: 80}}
+              />
+            )}
           </Animated.View>
         </View>
       </TouchableOpacity>

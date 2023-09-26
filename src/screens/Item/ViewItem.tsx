@@ -1,41 +1,17 @@
 import React from 'react';
-import {View, Text, StyleSheet, ScrollView, Image} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Image,
+  Pressable,
+} from 'react-native';
 import {globalStyles} from '../../core/config/global-styles';
 import colors from '../../core/config/colors';
 import AppBtn from '../../components/AppBtn';
 import Accordion from '../../components/Accordion';
-
-const Header = () => {
-  return (
-    <View style={headerStyles.container}>
-      <View style={headerStyles.iconContainer}>
-        <Image
-          source={require('./src/assets/images/right-arrow.png')}
-          style={headerStyles.icon}
-        />
-      </View>
-    </View>
-  );
-};
-
-const ProductInfo = () => {
-  return (
-    <View style={productInfoStyles.container}>
-      <Image source={require('./src/assets/images/circles.png')} />
-    </View>
-  );
-};
-
-const ProductTitle = () => {
-  return (
-    <View style={productTitleStyles.container}>
-      <Text style={productTitleStyles.title}>
-        African Donut Mix (Puff Puff)
-      </Text>
-      <Text style={productTitleStyles.price}>$3.39</Text>
-    </View>
-  );
-};
+import routes from '../../routes/routes';
 
 const ProductDescription = () => {
   return (
@@ -52,14 +28,14 @@ const CartControls = () => {
     <View style={cartControlsStyles.container}>
       <View style={cartControlsStyles.controlContainer}>
         <Image
-          source={require('./src/assets/images/minus.png')}
+          source={require('../../assets/images/minus.png')}
           style={cartControlsStyles.controlIcon}
         />
       </View>
       <Text style={cartControlsStyles.quantity}>1</Text>
       <View style={cartControlsStyles.controlContainer}>
         <Image
-          source={require('./src/assets/images/plus.png')}
+          source={require('../../assets/images/plus.png')}
           style={cartControlsStyles.plusIcon}
         />
       </View>
@@ -67,7 +43,12 @@ const CartControls = () => {
   );
 };
 
-export const ViewItems: React.FC = () => {
+export const ViewItem: React.FC = props => {
+  const {navigation, route} = props;
+  const {foodName} = route.params;
+  const {price} = route.params;
+  const {image} = route.params;
+
   const accordionData = [
     {
       title: 'Ingredients',
@@ -95,6 +76,41 @@ export const ViewItems: React.FC = () => {
     },
   ];
 
+  // eslint-disable-next-line react/no-unstable-nested-components
+  const ProductTitle = () => {
+    return (
+      <View style={productTitleStyles.container}>
+        <Text style={productTitleStyles.title}>{foodName}</Text>
+        <Text style={productTitleStyles.price}>{price}</Text>
+      </View>
+    );
+  };
+
+  // eslint-disable-next-line react/no-unstable-nested-components
+  const ProductInfo = () => {
+    return (
+      <View style={productInfoStyles.container}>
+        <Image source={image} style={{width: 350, height: 320}} />
+      </View>
+    );
+  };
+
+  // eslint-disable-next-line react/no-unstable-nested-components
+  const Header = () => {
+    return (
+      <Pressable
+        onPress={() => navigation.navigate(routes.home)}
+        style={headerStyles.container}>
+        <View style={headerStyles.iconContainer}>
+          <Image
+            source={require('../../assets/images/right-arrow.png')}
+            style={headerStyles.icon}
+          />
+        </View>
+      </Pressable>
+    );
+  };
+
   return (
     <View style={styles.container}>
       <Header />
@@ -112,7 +128,14 @@ export const ViewItems: React.FC = () => {
         </View>
         <CartControls />
         <View style={buttonStyles.container}>
-          <AppBtn title="Add to cart" onPress={() => console.log('Hello')} />
+          <AppBtn
+            title="Add to cart"
+            onPress={() => navigation.navigate(routes.cart)}
+            icon={undefined}
+            type={undefined}
+            color={undefined}
+            moreButtonStyles={undefined}
+          />
         </View>
         <View style={buttonStyles.subscribecontainer}>
           <AppBtn
@@ -120,6 +143,8 @@ export const ViewItems: React.FC = () => {
             type={'outline'}
             color={colors.primary}
             onPress={() => console.log('Hello')}
+            icon={undefined}
+            moreButtonStyles={undefined}
           />
         </View>
       </ScrollView>
@@ -243,10 +268,9 @@ const cartControlsStyles = StyleSheet.create({
 const buttonStyles = StyleSheet.create({
   container: {
     marginTop: 30,
-    marginBottom: 40,
+    marginBottom: 10,
   },
   subscribecontainer: {
-    marginTop: 20,
     marginBottom: 30,
   },
 });
