@@ -1,56 +1,74 @@
 import React, {useState} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
-import Animated, {Easing} from 'react-native-reanimated';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Animated,
+  Easing,
+  StyleSheet,
+} from 'react-native';
+import colors from '../core/config/colors';
+import {globalStyles} from '../core/config/global-styles';
+interface AccordionProps {
+  title: string;
+  content: React.ReactNode;
+}
 
-const Accordion: React.FC<{title: string; content: string}> = ({
-  title,
-  content,
-}) => {
-  const [isOpen, setIsOpen] = useState(false);
+const Accordion: React.FC<AccordionProps> = ({title, content}) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const rotateValue = new Animated.Value(0);
 
-  const rotateArrow = new Animated.Value(0);
-  const arrowRotation = Animated.interpolate(rotateArrow, {
+  const toggleAccordion = () => {
+    setIsExpanded(!isExpanded);
+
+    Animated.timing(rotateValue, {
+      toValue: isExpanded ? 0 : 1,
+      duration: 300,
+      easing: Easing.ease,
+      useNativeDriver: false,
+    }).start();
+  };
+
+  const rotateArrow = rotateValue.interpolate({
     inputRange: [0, 1],
     outputRange: ['0deg', '180deg'],
   });
 
-  const toggleAccordion = () => {
-    setIsOpen(!isOpen);
-    Animated.timing(rotateArrow, {
-      toValue: isOpen ? 0 : 1,
-      duration: 300,
-      easing: Easing.inOut(Easing.ease),
-    }).start();
-  };
-
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={toggleAccordion} style={styles.header}>
-        <Text style={styles.title}>{title}</Text>
-        <Animated.View style={{transform: [{rotate: arrowRotation}]}}>
-          <Text>Hi</Text>
-        </Animated.View>
+      <TouchableOpacity onPress={toggleAccordion}>
+        <View style={styles.header}>
+          <Text style={styles.title}>{title}</Text>
+          <Animated.View style={{transform: [{rotate: rotateArrow}]}}>
+            {isExpanded ? <Text>▲</Text> : <Text>▼</Text>}
+          </Animated.View>
+        </View>
       </TouchableOpacity>
-      {isOpen && <Text style={styles.content}>{content}</Text>}
+      {isExpanded && (
+        <View style={styles.content}>
+          <Text>{content}</Text>
+        </View>
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    borderColor: '#ccc',
-    borderWidth: 1,
-    margin: 10,
+    borderTopWidth: 1,
+    borderColor: colors.ash,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 10,
-    backgroundColor: '#f5f5f5',
+    marginTop: 5,
   },
   title: {
-    fontSize: 18,
+    ...globalStyles.paragraph,
+    fontFamily: 'Poppins-Medium',
+    color: colors.black,
   },
   content: {
     padding: 10,

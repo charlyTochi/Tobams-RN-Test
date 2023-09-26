@@ -1,8 +1,8 @@
 import React from 'react';
 import {View, Text, StyleSheet, ScrollView, Image} from 'react-native';
-import {globalStyles} from './src/core/config/global-styles';
-import colors from './src/core/config/colors';
-import AppBtn from './src/components/AppBtn';
+import {globalStyles} from '../../core/config/global-styles';
+import colors from '../../core/config/colors';
+import AppBtn from '../../components/AppBtn';
 
 const dummyCartItems = [
   {
@@ -72,7 +72,7 @@ const ProductItem: React.FC<{item: any}> = ({item}) => (
   </View>
 );
 
-const App: React.FC = () => (
+export const Cart: React.FC = () => (
   <>
     <Header />
 
@@ -228,5 +228,3 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
 });
-
-export default App;
